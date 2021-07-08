@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Text, View, StatusBar, Switch, Image, StyleSheet } from 'react-native'
+import { Text, View, StatusBar, Switch, Image } from 'react-native'
 import styled from 'styled-components'
 import { Ionicons, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
 import Container from '../components/ContainerView'
 import VerticalSpace from '../components/VerticalSpace'
-import CircularSlider from 'rn-circular-slider'
+import Row from '../components/Row'
+import Slider from '../components/Slider'
 
 
 const Home = () => {
@@ -27,7 +28,7 @@ const Home = () => {
                 hidden={true}
             />
             <TopView >
-                <RowView >
+                <Row >
                     <Entypo name="flattr" size={24} color="black" />
                     <Text
                         style={{ color: 'white', fontSize: 15, fontWeight: '700' }}
@@ -35,7 +36,7 @@ const Home = () => {
                         BORROW
                     </Text>
                     <MaterialCommunityIcons name="account" size={24} color="#F687FF" />
-                </RowView>
+                </Row>
                 <VerticalSpace height={31} />
                 <Text
                     style={{ color: 'white', fontSize: 28, fontWeight: '600', paddingLeft: 30 }}
@@ -56,9 +57,9 @@ const Home = () => {
                     How much would you like to borrow?
                 </Text>
                 <ChoseCryptoView>
-                    <RowView pl='0px' pr='0px' pt='0px'>
+                    <Row pl='0px' pr='0px' pt='0px'>
                         <View>
-                            <RowView jc='flex-start' pl='0px' pr='0px' pt='0px'>
+                            <Row jc='flex-start' pl='0px' pr='0px' pt='0px'>
                                 <Image
                                     source={require('../../assets/bitcoin.jpg')}
                                     style={{
@@ -78,7 +79,7 @@ const Home = () => {
                                 >
                                     Do you own crypto?
                                 </Text>
-                            </RowView>
+                            </Row>
                             <Text
                                 style={{
                                     color: '#585858',
@@ -96,7 +97,7 @@ const Home = () => {
                             onValueChange={toggleSwitch}
                             value={isEnabled}
                         />
-                    </RowView>
+                    </Row>
                 </ChoseCryptoView>
                 <VerticalSpace height={10} />
                 {show ? <View style={{
@@ -104,7 +105,7 @@ const Home = () => {
                     alignSelf: 'center',
                     marginBottom: 10
                 }}>
-                    <RowView jc='flex-start' pl='0px' pr='0px' pt='0px' >
+                    <Row jc='flex-start' pl='0px' pr='0px' pt='0px' >
                         <Image
                             source={require('../../assets/bitcoin.jpg')}
                             style={{
@@ -121,7 +122,7 @@ const Home = () => {
                         >
                             BitCoin
                         </Text>
-                    </RowView>
+                    </Row>
 
                 </View> : null}
 
@@ -133,35 +134,15 @@ const Home = () => {
                     marginBottom: 10
                 }}>
 
-                    <CircularSlider
-                        step={1}
-                        min={50}
+                    <Slider
                         max={max}
+                        min={min}
                         value={value}
-                        onChange={value => setValue(value)}
-                        contentContainerStyle={styles.contentContainerStyle}
-                        strokeWidth={30}
-                        buttonBorderColor="white"
-                        buttonFillColor="#fff"
-                        buttonStrokeWidth={10}
-                        openingRadian={Math.PI / 4}
-                        buttonRadius={10}
-                        linearGradient={[{ stop: '0%', color: 'black' }, { stop: '100%', color: 'black' }]}
-                    >
-                        <Text style={styles.value}>$ {value}</Text>
-                        <Text style={{ fontSize: 15 }}>max ${max}</Text>
-                        <RowView style={{ position: 'absolute', top: 190 }}>
-                            <Text style={{ fontSize: 15, color: '#585858' }}>
-                                ${min}
-                            </Text>
-                            <Text style={{ fontSize: 15, color: '#585858' }} >
-                                ${max}
-                            </Text>
-                        </RowView>
-                    </CircularSlider>
+                        onChange={(v) => { setValue(v) }}
+                    />
 
                 </View>
-                <RowView jc='flex-start' pl='30px' pr='0px' pt='0px' >
+                <Row jc='flex-start' pl='30px' pr='0px' pt='0px' >
                     <Text
                         style={{
                             color: 'black',
@@ -191,12 +172,10 @@ const Home = () => {
                     >
                         {" $8,800.00"}
                     </Text>
-                </RowView>
-                <RowView jc='flex-end' pl='00px' pr='24px' pt='0px' >
+                </Row>
+                <Row jc='flex-end' pl='00px' pr='24px' pt='0px' >
                     <Ionicons name="ios-arrow-forward-circle" size={45} color="black" />
-                </RowView>
-
-
+                </Row>
             </MainView>
         </Container>
     )
@@ -208,18 +187,6 @@ const TopView = styled(View)`
             rgba(118, 89, 251, 1);
             height: 285px;
             width: 100%;
-            `
-
-const RowView = styled(View)`
-            width: 100%;
-           
-            padding-top: ${(prop) => prop.pt || '30px'};
-            padding-left: ${(prop) => prop.pl || '30px'};
-            padding-right: ${(prop) => prop.pr || '30px'};
-            flex-direction: row;
-            align-self: flex-start;
-            justify-content: ${(prop) => prop.jc || 'space-between'};
-            align-items: center;
             `
 
 const MainView = styled(View)`
@@ -241,22 +208,7 @@ const ChoseCryptoView = styled(View)`
             margin-left:13px;
             margin-right:13px;
             border-radius: 7px;
-            `
-
-const styles = StyleSheet.create({
-
-    contentContainerStyle: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    value: {
-        fontWeight: '500',
-        fontSize: 32,
-        color: 'black'
-    }
-});
-
-
+`
 
 export default Home
 
